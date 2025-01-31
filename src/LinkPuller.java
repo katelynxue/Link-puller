@@ -52,6 +52,7 @@ public class LinkPuller implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         System.out.println("Button clicked");
+        results.setText("");
         String t = urlInput.getText();
 //        urlInput.setText(t);
         search();
@@ -73,15 +74,18 @@ public class LinkPuller implements ActionListener {
                 if (line.contains(searchTerm) && line.contains("href")) {
 //                    System.out.println(line);
                     int start = line.indexOf("href") + 6;
-                    while (start != -1) {
-                        String miniline = line.substring(start);
-                        int end = miniline.indexOf("\"") -1;
-                        String URL = miniline.substring(0, end);
-                        System.out.println(c + ". " + URL);
+                    while (start != 5) {
+                        int end = line.indexOf("\"", start) -1;
+                        String miniline = line.substring(start, end);
+                        System.out.println(c + ". " + miniline);
+                        results.append(miniline + "\n");
                         c++;
-                        start = miniline.indexOf("href",end);
-                        System.out.println("start: " + start);
+                        start = line.indexOf("href",end)+6;
+//                        System.out.println("start: " + start);
 //                        break;
+//                        if (c> 10) {
+//                            break;
+//                        }
                     }
                 }
             }
